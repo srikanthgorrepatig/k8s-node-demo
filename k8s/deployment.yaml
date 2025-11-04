@@ -4,7 +4,7 @@ metadata:
   name: node-demo-deployment
   namespace: demo-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: node-demo
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: node-demo
-          image: srikanthawsos/node-docker-demo:latest   # <--- update here
+          image: srikanthawsos/node-docker-demo:latest
           ports:
             - containerPort: 3000
-          imagePullPolicy: IfNotPresent   # Good for local testing
+          imagePullPolicy: IfNotPresent
