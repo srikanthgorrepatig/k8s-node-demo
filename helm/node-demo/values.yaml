@@ -13,5 +13,9 @@ port: 3000
 
 
 ingress:
-enabled: true
-hostname: node-demo.local
+  enabled: true
+  hostname: node-demo.local
+
+  tls:
+    enabled: true
+    secretName: node-demo-tls

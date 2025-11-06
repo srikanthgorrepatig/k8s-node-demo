@@ -97,7 +97,53 @@ http://node-demo.local
 
 ## 🔒 Optional TLS Setup
 
-If using TLS, configure the secret and enable ingress TLS in `values.yaml`.
+### 1. Generate a Self-Signed Certificate (Local Testing Only)
+
+```bash
+mkdir -p k8s-tls
+cd k8s-tls
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout node-demo.key \
+  -out node-demo.crt \
+  -subj "/CN=node-demo.local/O=node-demo.local"
+```
+
+### 2. Create Kubernetes TLS Secret
+
+```bash
+kubectl create secret tls node-demo-tls \
+  --namespace demo-app \
+  --key k8s-tls/node-demo.key \
+  --cert k8s-tls/node-demo.crt
+```
+
+### 3. Enable TLS in `values.yaml`
+
+```yaml
+ingress:
+  enabled: true
+  hosts:
+    - host: node-demo.local
+      paths:
+        - /
+  tls:
+    enabled: true
+    secretName: node-demo-tls
+```
+
+### 4. Apply the Update
+
+```bash
+helm upgrade node-demo ./helm/node-demo -n demo-app
+```
+
+### 5. Access Over HTTPS
+
+```
+https://node-demo.local
+```
+
+> **Note:** Since this is a self-signed certificate, your browser will show a security warning. Accept it to proceed.
 
 ---
 
