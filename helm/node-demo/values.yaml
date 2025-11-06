@@ -1,0 +1,17 @@
+replicaCount: 1
+
+
+image:
+repository: your-dockerhub-username/node-demo
+tag: latest
+pullPolicy: IfNotPresent
+
+
+service:
+type: ClusterIP
+port: 3000
+
+
+ingress:
+enabled: true
+hostname: node-demo.local
