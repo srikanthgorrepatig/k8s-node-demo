@@ -13,8 +13,6 @@ A simple Node.js web application deployed on a local **Kubernetes Kind cluster**
 
 ---
 
----
-
 ## 🏗️ Build & Push Docker Image
 
 ```bash
