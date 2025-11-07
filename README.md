@@ -13,25 +13,6 @@ A simple Node.js web application deployed on a local **Kubernetes Kind cluster**
 
 ---
 
-## 📁 Project Structure
-
-```
-k8s-node-demo/
-├── app/
-│   ├── server.js
-│   ├── package.json
-│   └── Dockerfile
-├── helm/
-│   └── node-demo/
-│       ├── Chart.yaml
-│       ├── values.yaml
-│       └── templates/
-│           ├── deployment.yaml
-│           ├── service.yaml
-│           └── ingress.yaml
-└── README.md
-```
-
 ---
 
 ## 🏗️ Build & Push Docker Image
