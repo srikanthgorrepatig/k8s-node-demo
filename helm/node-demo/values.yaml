@@ -3,7 +3,7 @@ replicaCount: 1
 
 image:
 repository: srikanthawsos/node-demo
-tag: latest
+tag: v2
 pullPolicy: IfNotPresent
 
 
