@@ -1,0 +1,49 @@
+name: CI - Build and Push Docker Image
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node (optional, only if tests later)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract short commit SHA
+        id: vars
+        run: echo "SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/node-demo:${{ env.SHORT_SHA }} ./app
+
+      - name: Push Docker Image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/node-demo:${{ env.SHORT_SHA }}
+
+      - name: Update Helm values with new image tag
+        run: |
+          sed -i "s/tag:.*/tag: \"${{ env.SHORT_SHA }}\"/g" helm/node-demo/values.yaml
+
+      - name: Commit and Push changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add helm/node-demo/values.yaml
+          git commit -m "Update image tag to ${{ env.SHORT_SHA }}"
+          git push
