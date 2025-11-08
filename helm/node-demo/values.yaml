@@ -2,7 +2,7 @@ replicaCount: 1
 
 
 image:
-repository: your-dockerhub-username/node-demo
+repository: srikanthawsos/node-demo
 tag: latest
 pullPolicy: IfNotPresent
 
