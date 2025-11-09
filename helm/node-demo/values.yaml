@@ -2,9 +2,9 @@ replicaCount: 1
 
 
 image:
-repository: srikanthawsos/node-demo
-tag: v2
-pullPolicy: IfNotPresent
+  repository: srikanthgorrepatig/node-demo
+  tag: v1.0.0
+  pullPolicy: IfNotPresent
 
 
 service:
